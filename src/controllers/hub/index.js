@@ -118,7 +118,8 @@ export const updateHub = (req, res) => {
   const adminId = req.admin.admin_id; // Simplified variable assignment
 
   // Build the SQL query for updating the hub
-  const q = "UPDATE hub SET hub_name = ?, description = ? WHERE admin_id = ? AND hub_id = ?";
+  const q =
+    "UPDATE hub SET hub_name = ?, description = ? WHERE admin_id = ? AND hub_id = ?";
 
   // Execute the update query
   db.query(q, [hub_name, description, adminId, hubId], (err, data) => {
@@ -129,7 +130,8 @@ export const updateHub = (req, res) => {
       });
     }
 
-    if (data.affectedRows === 0) { // Checking affectedRows for successful update
+    if (data.affectedRows === 0) {
+      // Checking affectedRows for successful update
       return res.status(404).json({
         success: false,
         message: "Hub not found or you don't have permission to update it",
@@ -144,5 +146,39 @@ export const updateHub = (req, res) => {
   });
 };
 
-
 // delete hub
+export const deleteHub = (req, res) => {
+  const hub_id = req.params.id; // Improved variable name
+
+  if (!hub_id) {
+    return res.status(400).json({
+      success: false,
+      message: "Hub ID is required",
+    });
+  }
+
+  const adminId = req.admin.admin_id;
+
+  const q = "DELETE FROM hub WHERE hub_id = ? AND admin_id = ?";
+
+  db.query(q, [hub_id, adminId], (err, result) => {
+    if (err) {
+      return res.status(500).json({
+        success: false,
+        message: err.message,
+      });
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Hub not found or you don't have permission to delete it",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Hub deleted successfully",
+    });
+  });
+};
