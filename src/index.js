@@ -5,6 +5,7 @@ import morgan from 'morgan'
 import dotenv from 'dotenv'
 import adminRoute from './routes/admin/index.js'
 import hubRoute from './routes/hubRoute/index.js'
+import CampaignRoute from './routes/campaignRoute/index.js'
 
 dotenv.config()
 
@@ -23,6 +24,7 @@ app.get('/', (req,res)=>{
 
 app.use(`/api/v1/ideahub`, adminRoute)
 app.use(`/api/v1/ideahub`, hubRoute)
+app.use(`/api/v1/ideahub`, CampaignRoute)
 
 app.listen(PORT,()=>{
     console.log(`app listening on port ${PORT}`)
