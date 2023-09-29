@@ -6,6 +6,8 @@ import dotenv from 'dotenv'
 import adminRoute from './routes/admin/index.js'
 import hubRoute from './routes/hubRoute/index.js'
 import CampaignRoute from './routes/campaignRoute/index.js'
+import memebrRoute from './routes/memberRoute/index.js'
+import IdeaRoute from './routes/ideaRoute/index.js'
 
 dotenv.config()
 
@@ -25,6 +27,8 @@ app.get('/', (req,res)=>{
 app.use(`/api/v1/ideahub`, adminRoute)
 app.use(`/api/v1/ideahub`, hubRoute)
 app.use(`/api/v1/ideahub`, CampaignRoute)
+app.use(`/api/v1/ideahub`, memebrRoute)
+app.use(`/api/v1/ideahub`, IdeaRoute)
 
 app.listen(PORT,()=>{
     console.log(`app listening on port ${PORT}`)
